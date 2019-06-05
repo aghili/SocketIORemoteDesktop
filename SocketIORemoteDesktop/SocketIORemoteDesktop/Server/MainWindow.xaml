@@ -1,0 +1,85 @@
+﻿<Window x:Class="SocketIORemoteDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SocketIORemoteDesktop"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="489.024" Width="534.756">
+    <Grid >
+        <Grid.RowDefinitions >
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+<RichTextBox  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Width="250" HorizontalAlignment="Left">
+            <FlowDocument>
+                <Paragraph FontSize="32" >Client side</Paragraph>
+                <Paragraph >Enter client information for communication with them.</Paragraph>
+            </FlowDocument>
+            </RichTextBox>
+        <Button
+      Content="Connect"
+      Margin="10,0"
+            Height="40"
+      Name="cmdConnect"
+      Click="cmdConnect_Click" Grid.Column="5" Grid.Row="7"/>
+        <TextBox
+            Name="txtClientID"
+      Height="auto"
+            MinHeight="25"
+            MinWidth="180"
+            Width="150"
+      HorizontalAlignment="Left"
+      VerticalAlignment="Top"
+            ToolTip="Client ID"
+           
+      Text="" Grid.Column="5" Grid.Row="3"/>
+
+        <!--<TextBox
+            
+      Height="36"
+      HorizontalAlignment="Left"
+      Margin="0,16,0,0"
+      Name="txtPassword"
+      VerticalAlignment="Top"
+      Grid.ColumnSpan="5" Grid.Row="10" Grid.Column="1"/>-->
+
+        <Button
+      Content="Send Message"
+      Height="28"
+      HorizontalAlignment="Left"
+      Margin="12,58,0,0"
+      Name="cmdSendMessage"
+      VerticalAlignment="Top"
+      Width="479"
+       Grid.ColumnSpan="6" Grid.Row="10"/>
+        <TextBox
+            Height="auto"
+            MinHeight="25"
+                       MinWidth="180"
+             HorizontalAlignment="Left"
+            x:Name="txtPassword"
+            VerticalAlignment="Top"
+            Width="169"
+            Text="Bruno" Grid.Column="5" Grid.Row="5" Margin="0,1,0,0"/>
+    </Grid>
+</Window>
