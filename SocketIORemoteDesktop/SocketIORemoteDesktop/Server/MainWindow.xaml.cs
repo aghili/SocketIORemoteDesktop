@@ -44,7 +44,7 @@ namespace SocketIORemoteDesktop
         private void cmdConnect_Click(object sender, RoutedEventArgs e)
         {
             //Console.WriteLine("Starting TestSocketIOClient Example...");
-            WndClientRemote wnd = new WndClientRemote(txtClientID.Text,txtPassword.Text);
+            WndClientRemote wnd = new WndClientRemote(txtClientIDRemote.Text,txtPasswordRemote.Password);
             wnd.Show();
         }
 
