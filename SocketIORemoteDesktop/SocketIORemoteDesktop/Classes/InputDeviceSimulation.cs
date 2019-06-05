@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SocketIORemoteDesktop.Classes
+namespace SocketIORemoteDesktop
 {
     public class InputDeviceSimulation
     {
@@ -23,7 +24,7 @@ namespace SocketIORemoteDesktop.Classes
 
         private void Button_Click(object sender)
         {
-            Click();
+            //Click();
             SendUnicode("Hello World !");
             SendKeyBoradKey((short)Keys.F1);
         }
@@ -100,24 +101,110 @@ namespace SocketIORemoteDesktop.Classes
             public Int16 wParamL;
             public Int16 wParamH;
         }
-        //Simulate mouse   
-        public static void Click()
+        ////Simulate mouse   
+        //public static void Click()
+        //{
+        //    INPUT input_down = MouseDown();
+        //    INPUT input_up = input_down;
+        //    input_up.mi.dwFlags = (int)MOUSEEVENTF.LEFTUP;
+        //    SendInput(1, ref input_up, Marshal.SizeOf(input_up));
+        //}
+
+        private static MOUSEEVENTF ConvertMouseButtonToMouseEventDown(MouseButtons button)
         {
-            INPUT input_down = MouseDown();
-            INPUT input_up = input_down;
-            input_up.mi.dwFlags = (int)MOUSEEVENTF.LEFTUP;
-            SendInput(1, ref input_up, Marshal.SizeOf(input_up));
+            MOUSEEVENTF dwflags = 0;
+            switch (button)
+            {
+                case MouseButtons.Left:
+                    dwflags = MOUSEEVENTF.LEFTDOWN;
+                    break;
+                case MouseButtons.Right:
+                    dwflags = MOUSEEVENTF.RIGHTDOWN;
+                    break;
+                case MouseButtons.Middle:
+                    dwflags = MOUSEEVENTF.MIDDLEDOWN;
+                    break;
+                case MouseButtons.XButton1:
+                    dwflags = MOUSEEVENTF.XDOWN;
+                    break;
+                default:
+                    return 0;
+            }
+            return dwflags;
+        }
+        private static MOUSEEVENTF ConvertMouseButtonToMouseEventUp(MouseButtons button)
+        {
+            MOUSEEVENTF dwflags = 0;
+            switch (button)
+            {
+                case MouseButtons.Left:
+                    dwflags = MOUSEEVENTF.LEFTUP;
+                    break;
+                case MouseButtons.Right:
+                    dwflags = MOUSEEVENTF.RIGHTUP;
+                    break;
+                case MouseButtons.Middle:
+                    dwflags = MOUSEEVENTF.MIDDLEUP;
+                    break;
+                case MouseButtons.XButton1:
+                    dwflags = MOUSEEVENTF.XUP;
+                    break;
+                default:
+                    return 0;
+            }
+            return dwflags;
         }
 
-        private static INPUT MouseDown()
+        public static void MouseDown(MouseButtons button,Point location)
         {
-            INPUT input_down = new INPUT();
-            input_down.mi.dx = 0;
-            input_down.mi.dy = 0;
-            input_down.mi.mouseData = 0;
-            input_down.mi.dwFlags = (int)MOUSEEVENTF.LEFTDOWN;
-            SendInput(1, ref input_down, Marshal.SizeOf(input_down));
-            return input_down;
+            MOUSEEVENTF dwflags = 0;
+            dwflags = ConvertMouseButtonToMouseEventDown(button);
+            if (dwflags == 0) return;
+
+            INPUT input_mouse = new INPUT();
+            input_mouse.type = (int)InputType.INPUT_MOUSE;
+            input_mouse.mi.dx = location.X;
+            input_mouse.mi.dy = location.Y;
+            input_mouse.mi.mouseData = 0;
+            input_mouse.mi.dwFlags = (int)dwflags;
+            SendInput(1, ref input_mouse, Marshal.SizeOf(input_mouse));
+        }
+
+        public static void MouseUp(MouseButtons button, Point location)
+        {
+            MOUSEEVENTF dwflags = 0;
+            dwflags = ConvertMouseButtonToMouseEventUp(button);
+            if (dwflags == 0) return;
+
+            INPUT input_mouse = new INPUT();
+            input_mouse.type = (int)InputType.INPUT_MOUSE;
+            input_mouse.mi.dx = location.X;
+            input_mouse.mi.dy = location.Y;
+            input_mouse.mi.mouseData = 0;
+            input_mouse.mi.dwFlags = (int)dwflags;
+            SendInput(1, ref input_mouse, Marshal.SizeOf(input_mouse));
+        }
+
+        public static void MouseScroll(int value)
+        {
+            INPUT input_mouse = new INPUT();
+            input_mouse.type = (int)InputType.INPUT_MOUSE;
+            input_mouse.mi.dx = 0;
+            input_mouse.mi.dy = 0;
+            input_mouse.mi.mouseData = value;
+            input_mouse.mi.dwFlags = (int)MOUSEEVENTF.WHEEL;
+            SendInput(1, ref input_mouse, Marshal.SizeOf(input_mouse));
+        }
+
+        public static void MouseMove(Point location)
+        {
+            INPUT input_mouse = new INPUT();
+            input_mouse.type = (int)InputType.INPUT_MOUSE;
+            input_mouse.mi.dx = location.X;
+            input_mouse.mi.dy = location.Y;
+            input_mouse.mi.mouseData = 0;
+            input_mouse.mi.dwFlags = (int)MOUSEEVENTF.MOVE;
+            SendInput(1, ref input_mouse, Marshal.SizeOf(input_mouse));
         }
 
         //Simulate keystrokes  Send unicode characters to send any character

@@ -13,7 +13,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>       
-        <Image Name="ImgScreen" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Stretch="UniformToFill"/>
+        <Image Name="ImgScreen" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top">
+            <Image.CacheMode>
+                <BitmapCache/>
+            </Image.CacheMode>
+        </Image>
 
     </Grid>
 </Window>

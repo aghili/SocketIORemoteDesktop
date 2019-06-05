@@ -39,6 +39,32 @@ namespace SocketIORemoteDesktop
             ComEngine.GetSocket.On("REIn", (input) =>
             {
                 var eventArg = new EventHandlerRemoteEvent(input.ToString());
+                switch (eventArg.Type)
+                {
+                    case EventType.KeyBoard:
+                        InputDeviceSimulation.SendKeyBoradKey((short)eventArg.Key);
+                        break;
+                    case EventType.MouseButton:
+                        switch (eventArg.ButtonState)
+                        {
+                          
+                            case MouseButtonState.Pressed:
+                                InputDeviceSimulation.MouseDown(eventArg.ChangedButton,eventArg.Location);
+                                break;
+                            case MouseButtonState.Released:
+                                InputDeviceSimulation.MouseUp(eventArg.ChangedButton, eventArg.Location);
+                                break;
+                        }
+                        break;
+                    case EventType.MouseMove:
+                        //InputDeviceSimulation.MouseMove(eventArg.Location);
+                        break;
+                    case EventType.MouseScroll:
+                        InputDeviceSimulation.MouseScroll(eventArg.Delta);
+                        break;
+                    default:
+                        return;
+                }
                 onEvent?.BeginInvoke(this,eventArg, (e) => { }, null);
             });
         }
@@ -131,7 +157,7 @@ namespace SocketIORemoteDesktop
         public string rawData { set; get; }
         public EventType Type { set; get; } = EventType.None;
         public MouseButtons ChangedButton { get; private set; }
-        public ButtonState ButtonState { get; private set; }
+        public MouseButtonState ButtonState { get; private set; }
         public Point Location { get; private set; }
         public int Delta { get; private set; }
         public Key Key { get; private set; }
@@ -146,7 +172,7 @@ namespace SocketIORemoteDesktop
                 case "MB":
                     Type = EventType.MouseButton;
                     ChangedButton = (MouseButtons)Convert.ToInt32(Event.B);
-                    ButtonState = (ButtonState)Convert.ToInt32(Event.BS);
+                    ButtonState = (MouseButtonState)Convert.ToInt32(Event.BS);
                     Location = new Point (Convert.ToInt32(Event.X), Convert.ToInt32(Event.Y));
                     break;
                 case "MM":
