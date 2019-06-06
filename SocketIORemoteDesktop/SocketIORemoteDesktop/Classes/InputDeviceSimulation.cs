@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace SocketIORemoteDesktop
 {
@@ -110,21 +111,21 @@ namespace SocketIORemoteDesktop
         //    SendInput(1, ref input_up, Marshal.SizeOf(input_up));
         //}
 
-        private static MOUSEEVENTF ConvertMouseButtonToMouseEventDown(MouseButtons button)
+        private static MOUSEEVENTF ConvertMouseButtonToMouseEventDown(MouseButton button)
         {
             MOUSEEVENTF dwflags = 0;
             switch (button)
             {
-                case MouseButtons.Left:
+                case MouseButton.Left:
                     dwflags = MOUSEEVENTF.LEFTDOWN;
                     break;
-                case MouseButtons.Right:
+                case MouseButton.Right:
                     dwflags = MOUSEEVENTF.RIGHTDOWN;
                     break;
-                case MouseButtons.Middle:
+                case MouseButton.Middle:
                     dwflags = MOUSEEVENTF.MIDDLEDOWN;
                     break;
-                case MouseButtons.XButton1:
+                case MouseButton.XButton1:
                     dwflags = MOUSEEVENTF.XDOWN;
                     break;
                 default:
@@ -132,21 +133,21 @@ namespace SocketIORemoteDesktop
             }
             return dwflags;
         }
-        private static MOUSEEVENTF ConvertMouseButtonToMouseEventUp(MouseButtons button)
+        private static MOUSEEVENTF ConvertMouseButtonToMouseEventUp(MouseButton button)
         {
             MOUSEEVENTF dwflags = 0;
             switch (button)
             {
-                case MouseButtons.Left:
+                case MouseButton.Left:
                     dwflags = MOUSEEVENTF.LEFTUP;
                     break;
-                case MouseButtons.Right:
+                case MouseButton.Right:
                     dwflags = MOUSEEVENTF.RIGHTUP;
                     break;
-                case MouseButtons.Middle:
+                case MouseButton.Middle:
                     dwflags = MOUSEEVENTF.MIDDLEUP;
                     break;
-                case MouseButtons.XButton1:
+                case MouseButton.XButton1:
                     dwflags = MOUSEEVENTF.XUP;
                     break;
                 default:
@@ -155,7 +156,7 @@ namespace SocketIORemoteDesktop
             return dwflags;
         }
 
-        public static void MouseDown(MouseButtons button,Point location)
+        public static void MouseDown(MouseButton button,Point location)
         {
             MOUSEEVENTF dwflags = 0;
             dwflags = ConvertMouseButtonToMouseEventDown(button);
@@ -170,7 +171,7 @@ namespace SocketIORemoteDesktop
             SendInput(1, ref input_mouse, Marshal.SizeOf(input_mouse));
         }
 
-        public static void MouseUp(MouseButtons button, Point location)
+        public static void MouseUp(MouseButton button, Point location)
         {
             MOUSEEVENTF dwflags = 0;
             dwflags = ConvertMouseButtonToMouseEventUp(button);

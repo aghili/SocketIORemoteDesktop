@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Quobject.SocketIoClientDotNet.Client;
+using SocketIORemoteDesktop.Utils;
 using System;
 using System.Drawing;
 using System.Threading;
@@ -42,25 +43,28 @@ namespace SocketIORemoteDesktop
                 switch (eventArg.Type)
                 {
                     case EventType.KeyBoard:
-                        InputDeviceSimulation.SendKeyBoradKey((short)eventArg.Key);
+                        Robot.KeyEvent(eventArg.KeyState == KeyStates.Down, (int)eventArg.Key);
+                        //InputDeviceSimulation.SendKeyBoradKey((short)eventArg.Key);
                         break;
                     case EventType.MouseButton:
-                        switch (eventArg.ButtonState)
-                        {
+                        Robot.PointerEvent(eventArg.ButtonState,eventArg.ChangedButton, eventArg.Location);
+                        //switch (eventArg.ButtonState)
+                        //{
                           
-                            case MouseButtonState.Pressed:
-                                InputDeviceSimulation.MouseDown(eventArg.ChangedButton,eventArg.Location);
-                                break;
-                            case MouseButtonState.Released:
-                                InputDeviceSimulation.MouseUp(eventArg.ChangedButton, eventArg.Location);
-                                break;
-                        }
+                        //    case MouseButtonState.Pressed:
+                        //        InputDeviceSimulation.MouseDown(eventArg.ChangedButton,eventArg.Location);
+                        //        break;
+                        //    case MouseButtonState.Released:
+                        //        InputDeviceSimulation.MouseUp(eventArg.ChangedButton, eventArg.Location);
+                        //        break;
+                        //}
                         break;
                     case EventType.MouseMove:
+                        Robot.PointerEvent(eventArg.ButtonState, eventArg.ChangedButton, eventArg.Location);
                         //InputDeviceSimulation.MouseMove(eventArg.Location);
                         break;
                     case EventType.MouseScroll:
-                        InputDeviceSimulation.MouseScroll(eventArg.Delta);
+                        Robot.mouseWheel(eventArg.Delta);
                         break;
                     default:
                         return;
@@ -133,6 +137,9 @@ namespace SocketIORemoteDesktop
                         }
                         catch (Exception ex)
                         {
+#if DEBUG
+                            throw ex;
+#endif
                             Thread.Sleep(5000);
                         }
                     else
@@ -156,7 +163,7 @@ namespace SocketIORemoteDesktop
     {
         public string rawData { set; get; }
         public EventType Type { set; get; } = EventType.None;
-        public MouseButtons ChangedButton { get; private set; }
+        public MouseButton ChangedButton { get; private set; }
         public MouseButtonState ButtonState { get; private set; }
         public Point Location { get; private set; }
         public int Delta { get; private set; }
@@ -171,7 +178,7 @@ namespace SocketIORemoteDesktop
             {
                 case "MB":
                     Type = EventType.MouseButton;
-                    ChangedButton = (MouseButtons)Convert.ToInt32(Event.B);
+                    ChangedButton = (MouseButton)Convert.ToInt32(Event.B);
                     ButtonState = (MouseButtonState)Convert.ToInt32(Event.BS);
                     Location = new Point (Convert.ToInt32(Event.X), Convert.ToInt32(Event.Y));
                     break;
