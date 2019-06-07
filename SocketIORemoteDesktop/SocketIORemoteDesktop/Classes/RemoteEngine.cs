@@ -42,25 +42,30 @@ namespace SocketIORemoteDesktop
                 var eventArg = new EventHandlerRemoteEvent(input.ToString());
                 switch (eventArg.Type)
                 {
+                    case EventType.KeyboardInputText:
+                        Robot.InputText(eventArg.Text);
+                        //InputDeviceSimulation.SendKeyBoradKey((short)eventArg.Key);
+                        break;
                     case EventType.KeyBoard:
                         Robot.KeyEvent(eventArg.KeyState == KeyStates.Down, (int)eventArg.Key);
                         //InputDeviceSimulation.SendKeyBoradKey((short)eventArg.Key);
                         break;
                     case EventType.MouseButton:
-                        Robot.PointerEvent(eventArg.ButtonState,eventArg.ChangedButton, eventArg.Location);
-                        //switch (eventArg.ButtonState)
-                        //{
-                          
-                        //    case MouseButtonState.Pressed:
-                        //        InputDeviceSimulation.MouseDown(eventArg.ChangedButton,eventArg.Location);
-                        //        break;
-                        //    case MouseButtonState.Released:
-                        //        InputDeviceSimulation.MouseUp(eventArg.ChangedButton, eventArg.Location);
-                        //        break;
-                        //}
+                        //Robot.PointerEvent(eventArg.ButtonState,eventArg.ChangedButton, eventArg.Location);
+                        switch (eventArg.ButtonState)
+                        {
+
+                            case MouseButtonState.Pressed:
+                                Robot.MouseMove(eventArg.Location);
+                                Robot.MousePress(eventArg.ChangedButton);
+                                break;
+                            case MouseButtonState.Released:
+                                Robot.MouseRelease(eventArg.ChangedButton);
+                                break;
+                        }
                         break;
                     case EventType.MouseMove:
-                        Robot.PointerEvent(eventArg.ButtonState, eventArg.ChangedButton, eventArg.Location);
+                        Robot.MouseMove(eventArg.Location);
                         //InputDeviceSimulation.MouseMove(eventArg.Location);
                         break;
                     case EventType.MouseScroll:
@@ -169,6 +174,7 @@ namespace SocketIORemoteDesktop
         public int Delta { get; private set; }
         public Key Key { get; private set; }
         public KeyStates KeyState { get; private set; }
+        public string Text { get; private set; }
 
         public EventHandlerRemoteEvent(string eventIn){
             rawData = eventIn;
@@ -195,6 +201,10 @@ namespace SocketIORemoteDesktop
                     Key = Event.K;
                     KeyState = (KeyStates)Convert.ToInt32(Event.KS);
                     break;
+                case "KIT":
+                    Type = EventType.KeyboardInputText;
+                    Text = Event.T;
+                    break;
             }
         }
     }
@@ -205,6 +215,7 @@ namespace SocketIORemoteDesktop
         KeyBoard,
         MouseButton,
         MouseMove,
-        MouseScroll
+        MouseScroll,
+        KeyboardInputText
     }
 }

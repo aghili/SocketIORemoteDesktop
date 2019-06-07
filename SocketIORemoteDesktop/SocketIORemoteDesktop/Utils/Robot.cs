@@ -59,6 +59,18 @@ namespace SocketIORemoteDesktop.Utils
         private static bool ctrl = false;
 
 
+        public static void InputText(string Text)
+        {
+                    try
+                    {
+                        System.Windows.Forms.SendKeys.SendWait(Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+        }
         public static void KeyEvent(bool pressed, int key)
         {
             try
@@ -107,15 +119,7 @@ namespace SocketIORemoteDesktop.Utils
                     keys += sCode;
 
                     Trace.WriteLine(keys);
-                    try
-                    {
-                        System.Windows.Forms.SendKeys.SendWait(keys);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-
+                    InputText(keys);
                 }
             }
             catch (Exception ex)
@@ -142,7 +146,8 @@ namespace SocketIORemoteDesktop.Utils
         /// <param name="Y">The Y coordinate where the pointer should be moved.</param>
         public static void PointerEvent(MouseButtonState buttonState,MouseButton button, Point Location)
         {
-            int i = 0;
+            byte i = 0;
+            if(buttonState == MouseButtonState.Pressed)
             switch (button)
             {
                 case MouseButton.Left:
@@ -165,30 +170,33 @@ namespace SocketIORemoteDesktop.Utils
             {
                 if (buttonState == MouseButtonState.Pressed)
                 {
-                    MouseMove(Location.X, Location.Y);
+                    MouseMove(Location);
                     MousePress(button);
                 }
                 else
+                {
                     MouseRelease(button);
+                    mouseModifiers = mouseModifiers ^ i;
+                }
                 mouseModifiers = i;
             }
             else
-                MouseMove(Location.X, Location.Y);
+                MouseMove(Location);
         }
         /// <summary>
         /// Moves the cursor to the specified position on screen.
         /// </summary>
         /// <param name="x">The X coordinate where the cursor will be moved.</param>
         /// <param name="y">The Y coordinate where the cursor will be moved.</param>
-        private static void MouseMove(int x, int y)
+        public static void MouseMove(Point location)
         {
-            System.Windows.Forms.Cursor.Position = new System.Drawing.Point(x, y);
+            System.Windows.Forms.Cursor.Position = location;
         }
         /// <summary>
         /// Performs a mouse key press.
         /// </summary>
         /// <param name="button">The mouse button that should be pressed. Left, right, or middle</param>
-        private static void MousePress(MouseButton button)
+        public static void MousePress(MouseButton button)
         {
             int dwFlags = 0;
             switch (button)
@@ -209,7 +217,7 @@ namespace SocketIORemoteDesktop.Utils
         /// Releases a pressed mouse button.
         /// </summary>
         /// <param name="button">The mouse button that should be released.</param>
-        private static void MouseRelease(MouseButton button)
+        public static void MouseRelease(MouseButton button)
         {
             int dwFlags = 0;
             switch (button)

@@ -198,7 +198,13 @@ namespace SocketIORemoteDesktop
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            SendKeyboardEvent(e);
+
+            //if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            //{
+            //    if(!e.IsRepeat)
+            //    SendKeyboardEvent(e);
+            //    e.Handled = true;
+            //}
         }
 
         private void SendKeyboardEvent(KeyEventArgs e)
@@ -214,9 +220,25 @@ namespace SocketIORemoteDesktop
                                                 ));
         }
 
+        private void SendInputText(string Text)
+        {
+            ComEngine.GetSocket.Emit("RE",
+                                                JsonConvert.SerializeObject(
+                                                    new
+                                                    {
+                                                        E = "KIT",
+                                                        T = Text
+                                                    }
+                                                ));
+        }
         private void Window_Closed(object sender, EventArgs e)
         {
             ComEngine.Dispose();
+        }
+
+        private void Window_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            SendInputText(e.Text);
         }
     }
     }

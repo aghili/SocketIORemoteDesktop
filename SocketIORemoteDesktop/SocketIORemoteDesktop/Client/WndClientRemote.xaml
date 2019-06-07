@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SocketIORemoteDesktop"
         mc:Ignorable="d"
-        Title="WndClientRemote" Height="300" Width="300" Loaded="Window_Loaded" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp" MouseWheel="Window_MouseWheel" MouseMove="Window_MouseMove" KeyDown="Window_KeyDown" Closed="Window_Closed">
+        Title="WndClientRemote" Height="300" Width="300" Loaded="Window_Loaded" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp" MouseWheel="Window_MouseWheel" MouseMove="Window_MouseMove" KeyDown="Window_KeyDown" Closed="Window_Closed" TextInput="Window_TextInput">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -13,7 +13,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>       
-        <Image Name="ImgScreen" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top">
+        <Image Name="ImgScreen" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Stretch="None">
             <Image.CacheMode>
                 <BitmapCache/>
             </Image.CacheMode>
