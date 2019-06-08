@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SocketIORemoteDesktop"
         mc:Ignorable="d"
-        Title="WndClientRemote" Height="300" Width="300" Loaded="Window_Loaded" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp" MouseWheel="Window_MouseWheel" MouseMove="Window_MouseMove" KeyDown="Window_KeyDown" Closed="Window_Closed" TextInput="Window_TextInput">
-    <Grid>
+        Title="WndClientRemote" Height="300" Width="300" Loaded="Window_Loaded" MouseDown="Window_MouseDown" MouseUp="Window_MouseUp" MouseWheel="Window_MouseWheel" MouseMove="Window_MouseMove" KeyDown="Window_KeyDown" Closed="Window_Closed" TextInput="Window_TextInput" KeyUp="Window_KeyUp" Drop="Window_Drop">
+    <Grid Drop="Grid_Drop">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>       
-        <Image Name="ImgScreen" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Stretch="None">
+        <Image Name="ImgScreen" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Stretch="None" AllowDrop="True" Drop="ImgScreen_Drop">
             <Image.CacheMode>
                 <BitmapCache/>
             </Image.CacheMode>

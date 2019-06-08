@@ -30,7 +30,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-<RichTextBox  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Width="250" HorizontalAlignment="Left" BorderThickness="0">
+<RichTextBox IsReadOnly="True"  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Width="250" HorizontalAlignment="Left" BorderThickness="0">
             <FlowDocument>
                 <Paragraph FontSize="32" >Client side</Paragraph>
                 <Paragraph >Enter server PC information and press connect to access other PC.</Paragraph>
@@ -73,7 +73,7 @@
       Name="cmdConnect"
       Click="cmdConnect_Click" Grid.Column="5" Grid.Row="7"/>
 
-        <RichTextBox  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="250" HorizontalAlignment="Left" BorderThickness="0">
+        <RichTextBox  IsReadOnly="True" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="250" HorizontalAlignment="Left" BorderThickness="0">
             <FlowDocument>
                 <Paragraph FontSize="32" >Your information</Paragraph>
                 <Paragraph >For connect from other PC to this sytem , Open

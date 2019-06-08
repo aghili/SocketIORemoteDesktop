@@ -198,13 +198,34 @@ namespace SocketIORemoteDesktop
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (
+                ((Keyboard.Modifiers | ModifierKeys.Control) == Keyboard.Modifiers
+                || (ModifierKeys.Alt | Keyboard.Modifiers) == Keyboard.Modifiers)
+                ||
+                    !((e.Key >= Key.A && e.Key <= Key.Z) || (e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9))
+           ){
+                //Title = $"{e.Key}{e.SystemKey}{string.Join<ModifierKey>(Keyboard.Modifiers)}";
+                e.Handled = true;
+                //    if(!e.IsRepeat)
+                    SendKeyboardEvent(e);
+                //    e.Handled = true;
+            }
+        }
 
-            //if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-            //{
-            //    if(!e.IsRepeat)
-            //    SendKeyboardEvent(e);
-            //    e.Handled = true;
-            //}
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (
+                ((Keyboard.Modifiers | ModifierKeys.Control) == Keyboard.Modifiers
+                || (ModifierKeys.Alt | Keyboard.Modifiers) == Keyboard.Modifiers)
+                ||
+                    !((e.Key >= Key.A && e.Key <= Key.Z) || (e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)))
+            {
+                //Title = $"{e.Key}{e.SystemKey}{string.Join<ModifierKey>(Keyboard.Modifiers)}";
+                e.Handled = true;
+                //    if(!e.IsRepeat)
+                SendKeyboardEvent(e);
+                //    e.Handled = true;
+            }
         }
 
         private void SendKeyboardEvent(KeyEventArgs e)
@@ -239,6 +260,18 @@ namespace SocketIORemoteDesktop
         private void Window_TextInput(object sender, TextCompositionEventArgs e)
         {
             SendInputText(e.Text);
+        }
+
+        private void ImgScreen_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Note that you can have more than one file.
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                // Assuming you have one file that you care about, pass it off to whatever
+                // handling code you have defined.
+            }
         }
     }
     }
