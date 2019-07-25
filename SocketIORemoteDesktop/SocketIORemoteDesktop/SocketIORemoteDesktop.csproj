@@ -86,7 +86,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Client\UcCotrolDialog.xaml.cs">
+      <DependentUpon>UcCotrolDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Robot.cs" />
+    <Page Include="Client\UcCotrolDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Client\WndClientRemote.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

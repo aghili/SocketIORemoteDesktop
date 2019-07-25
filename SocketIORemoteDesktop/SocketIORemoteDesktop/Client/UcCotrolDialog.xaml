@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="SocketIORemoteDesktop.Client.UcCotrolDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SocketIORemoteDesktop.Client"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+
+        <Storyboard x:Key="sbShowLeftMenu" >
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="-150,0,0,0" To="0,0,0,0" DecelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+        <Storyboard x:Key="sbHideLeftMenu">
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="-150,0,0,0" AccelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+
+
+        <Storyboard x:Key="sbShowTopMenu" >
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,-100,0,0" To="0,0,0,0" DecelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+        <Storyboard x:Key="sbHideTopMenu">
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="0,-100,0,0" AccelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+
+
+        <Storyboard x:Key="sbShowRightMenu" >
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,-150,0" To="0,0,0,0" DecelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+        <Storyboard x:Key="sbHideRightMenu">
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="0,0,-150,0" AccelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+
+
+        <Storyboard x:Key="sbShowBottomMenu" >
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,-100" To="0,0,0,0" DecelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+        <Storyboard x:Key="sbHideBottomMenu">
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="0,0,0,-100" AccelerationRatio=".9" Duration="0:0:1" />
+        </Storyboard>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel Panel.ZIndex="2" Name="pnlLeftMenu" Orientation="Horizontal" Height="400" HorizontalAlignment="Left" Margin="-150,0,0,0">
+            <Border BorderBrush="#AF1719" BorderThickness="1" Width="150" Background="#4C808080" >
+
+            </Border>
+            <Grid>
+                <Button Name="btnLeftMenuHide" Width="48" Height="48" Click="btnLeftMenuHide_Click" Content="Hide" Visibility="Hidden"/>
+                <Button Name="btnLeftMenuShow" Width="48" Height="48" Click="btnLeftMenuShow_Click" Content="Show"/>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Panel.ZIndex="2" Name="pnlTopMenu" Orientation="Vertical" Width="400" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-100,0,0">
+            <Border BorderBrush="#AF1719" BorderThickness="1" Height="100" Background="#4C808080" >
+
+            </Border>
+            <Grid>
+                <Button Name="btnTopMenuHide" Width="48" Height="48" Click="btnTopMenuHide_Click" Content="Hide" Visibility="Hidden"/>
+                <Button Name="btnTopMenuShow" Width="48" Height="48" Click="btnTopMenuShow_Click" Content="Show"/>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Panel.ZIndex="2" Name="pnlRightMenu" Orientation="Horizontal" Height="400" HorizontalAlignment="Right" Margin="0,0,-150,0">
+            <Grid>
+                <Button Name="btnRightMenuHide" Width="48" Height="48" Click="btnRightMenuHide_Click" Content="Hide" Visibility="Hidden"/>
+                <Button Name="btnRightMenuShow" Width="48" Height="48" Click="btnRightMenuShow_Click" Content="Show"/>
+            </Grid>
+            <Border BorderBrush="#AF1719" BorderThickness="1" Width="150" Background="#4C808080" >
+
+            </Border>
+        </StackPanel>
+
+        <StackPanel Panel.ZIndex="2" Name="pnlBottomMenu" Orientation="Vertical" Width="400" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-100">
+            <Grid>
+                <Button Name="btnBottomMenuHide" Width="48" Height="48" Click="btnBottomMenuHide_Click" Content="Hide" Visibility="Hidden"/>
+                <Button Name="btnBottomMenuShow" Width="48" Height="48" Click="btnBottomMenuShow_Click" Content="Show"/>
+            </Grid>
+            <Border BorderBrush="#AF1719" BorderThickness="1" Height="100" Background="#4C808080" >
+
+            </Border>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

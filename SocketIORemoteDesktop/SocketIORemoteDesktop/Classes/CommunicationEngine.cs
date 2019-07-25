@@ -44,6 +44,8 @@ namespace SocketIORemoteDesktop
             }
         }
 
+        public string ServerIP { get; private set; } = "198.143.183.212";
+
         public bool Connect()
         {
             try
@@ -57,7 +59,7 @@ namespace SocketIORemoteDesktop
                 {
 
                 };
-                socket = IO.Socket("http://static.85-10-248-60.clients.your-server.de:5000/",opt);
+                socket = IO.Socket($"http://{ServerIP}:5000/",opt);
                 socket.Connect();
                 return true;
                 //return InitRemote();
